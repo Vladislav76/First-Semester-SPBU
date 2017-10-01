@@ -5,9 +5,12 @@ void endian() {
         char c[sizeof(int)];
     } un;
     un.i = 1;
-    if (un.c[0] != 0)
+    if (un.c[0] != 0) {
         printf("little-endian\n");
-    else printf("big-endian\n");
+    }
+    else {
+        printf("big-endian\n");
+    }
 }
 int main() {
     endian();
