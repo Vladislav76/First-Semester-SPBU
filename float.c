@@ -9,7 +9,9 @@ struct qq {
 	char s[200];
 	void (*fptr)(float, int*, int*, int*);
 };
-struct qq m[3] = {{"1", &fn1}, {"2", &fn2}, {"3", &fn3}};
+struct qq m[3] = {{"Union с int и битовые операции", &fn1}, 
+{"Union со структурой с bit fields", &fn2}, 
+{"Взятие адреса и разыменование указателя, приведенного к другому типу и битовые операции", &fn3}};
 
 void fn1(float a,  int* sign, int* mant, int* exp) {
 	union {
@@ -71,6 +73,19 @@ int main(void) {
 	printf("Enter two float-numbers:\n");
 	scanf("%f%f", &a, &b);
 	m[num - 1].fptr(a / b, &sign, &mant, &exp);
-	print_float(sign, mant, exp);
+	if (b == 0) {
+		if (a > 0) {
+			printf("+Inf\n");
+		} 
+		else if (a < 0) {
+				printf("-Inf\n");
+		}
+		else {
+			printf("Nan\n");
+		}
+	}
+	else {
+		print_float(sign, mant, exp);
+	}
 	return 0;
 }
