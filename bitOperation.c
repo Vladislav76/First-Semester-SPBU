@@ -6,16 +6,18 @@ int bitXor(int x, int y) {
 	return ~(x & y) & ~(~x & ~y);	
 }
 int thirdBits(void) {
-	int i = 9;
+	int i = 73;
 	i = i << 9 | 73;
 	i = i << 9 | 73;
-	i = i << 9 | 73;
+	i = i << 5 | 4;
 	return i;
 }
 int fitsBits(int x, int n) {
 	int a = ~1 + 1;
 	int l = 1 << (n + a);
 	int r = ~(l + a) + 1;
+	printf("l=%d r=%d\n", l, r);
+	printf("1=%d 2=%d\n", ((~(x + r) + 1) >> 31), ((x + l) >> 31));
 	int res = ((~(x + r) + 1) >> 31) ^ ((x + l) >> 31);
 	return !res;
 }
@@ -26,18 +28,19 @@ int sign(int x) {
 	return res;
 }
 int getByte(int x, int n) {
-	n = ~n & 3;
 	n = n << 3;
-	x = x << n;
-	x = x >> 24;
+	x = (x >> n) & 255;
 	return x;
 }
 int logicalShift(int x, int n) {
 	int num = ~n + 1;
 	int offset = 32 + num;
 	int mask = ~0;
+	printf("mask=%x\n", mask);
 	mask = mask << offset;
+	printf("mask=%x\n", mask);
 	mask = ~mask;
+	printf("mask=%d\n", mask);
 	x = x >> n;
 	x = x & mask;
 	return x;
@@ -62,5 +65,6 @@ int isPower2(int x) {
 	return !!x & !((x >> 31) & 1) & !(x & y + y) ;
 }
 int main() {
+	printf("%d\n", fitsBits(-2147483648, 1));
 	return 0;
 }
