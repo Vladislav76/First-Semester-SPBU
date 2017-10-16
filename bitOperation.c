@@ -13,13 +13,10 @@ int thirdBits(void) {
 	return i;
 }
 int fitsBits(int x, int n) {
-	int a = ~1 + 1;
-	int l = 1 << (n + a);
-	int r = ~(l + a) + 1;
-	printf("l=%d r=%d\n", l, r);
-	printf("1=%d 2=%d\n", ((~(x + r) + 1) >> 31), ((x + l) >> 31));
-	int res = ((~(x + r) + 1) >> 31) ^ ((x + l) >> 31);
-	return !res;
+	int offs = 32 + (~n + 1);
+	int y = x << offs;
+	y = y >> offs;
+	return !(x + ~y + 1);
 }
 int sign(int x) {
 	int lastNum = !!x;
@@ -34,13 +31,9 @@ int getByte(int x, int n) {
 }
 int logicalShift(int x, int n) {
 	int num = ~n + 1;
-	int offset = 32 + num;
-	int mask = ~0;
-	printf("mask=%x\n", mask);
-	mask = mask << offset;
-	printf("mask=%x\n", mask);
+	int offset = (32 + num) & 31;
+	int mask = ~0 << offset;
 	mask = ~mask;
-	printf("mask=%d\n", mask);
 	x = x >> n;
 	x = x & mask;
 	return x;
@@ -65,6 +58,7 @@ int isPower2(int x) {
 	return !!x & !((x >> 31) & 1) & !(x & y + y) ;
 }
 int main() {
-	printf("%d\n", fitsBits(-2147483648, 1));
+	printf("%d\n", logicalShift(-2147483648, 0));
+	printf("ch = %x\n", d);
 	return 0;
 }
