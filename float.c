@@ -62,7 +62,7 @@ void print_float(int sign, int mant, int exp) {
 	for (int i = 0; i < step; i++) {
 		f = f * offs;
 	}
-	printf("Result: %f\n", f);
+    printf("Result: %f\n", f);
 }
 int main(void) {
  	float a, b;
