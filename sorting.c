@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAX_VALUE 32768
+void CountingSorting(int *m, int size) {
+    int *TempArray = calloc(MAX_VALUE, sizeof(int));
+    for (int i = 0; i < size; i++) {
+        TempArray[m[i]]++;
+    }
+    int num = 0;
+    for (int i = 0; i < MAX_VALUE; i++) {
+        for (int j = 0; j < TempArray[i]; j++) {
+            m[num] = i;
+            num++;
+        }
+    }
+}
+void BubbleSorting(int *m, int size) {
+    for (int k = 0; k < size; k++) {
+        for (int i = size - 1; i > k; i--) {
+            if (m[i - 1] > m[i]) {
+                int temp = m[i - 1];
+                m[i - 1] = m[i];
+                m[i] = temp;
+            }
+        }
+    }
+}
+void QuickSorting(int *m, int size) {
+    void Sort(int l, int r) {
+        int i = l;
+        int j = r;
+        int k = (l + r) / 2;
+        int x = m[k];
+        do {
+            while (m[i] < x) {
+                i++;
+            }
+            while (m[j] > x) {
+                j--;
+            }
+            if (i <= j) {
+                int temp = m[i];
+                m[i] = m[j];
+                m[j] = temp;
+                i++;
+                j--;
+            }
+        } while (i <= j);
+        if (i < r) {
+            Sort(i, r);
+        }
+        if (j > l) {
+            Sort(l, j);
+        }
+    }
+    Sort(0, size - 1);
+}
+void InputArray(int *array, int size) {
+    srand(time(NULL));
+    for (int i = 0; i < size; i++) {
+        array[i] = rand() % MAX_VALUE;
+    //    printf("%d ", Array[i]);
+    }
+    //printf("\n");
+}
+void PrintResult(int *m, int size, clock_t time) {
+    for (int i = 0; i < size; i++) {
+       // printf("%d ", m[i]);
+    }
+    double sec = ((double)time) / CLOCKS_PER_SEC;
+    int min = sec / 60;
+    sec = sec - min * 60;
+    printf("Время выполнения: %d минут, %.6f секунд(а) для %d чисел\n", min, sec, size);
+}
+void Header(int num) {
+    switch (num) {
+        case 1:
+            printf("*********************************************************\n");
+            printf("1. Counting Sorting\n");
+            break;
+        case 2:
+            printf("*********************************************************\n");
+            printf("2. Quick Sorting\n");
+            break;
+        case 3:
+            printf("*********************************************************\n");
+            printf("3. Bubble Sorting\n");
+            break;
+    }
+}
+void Execution(int typeSort) {
+    int num[] = {5, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
+    for (int k = 0; k < 9; k++) {
+        int *m = (int*) calloc(num[k], sizeof(int));
+        InputArray(m, num[k]);
+        clock_t startTime;
+        clock_t finishTime;
+        switch (typeSort) {
+            case 1:
+                startTime = clock();
+                CountingSorting(m, num[k]);
+                finishTime = clock();
+                break;
+            case 2:
+                startTime = clock();
+                QuickSorting(m, num[k]);
+                finishTime = clock();
+                break;
+            case 3:
+                startTime = clock();
+                BubbleSorting(m, num[k]);
+                finishTime = clock();
+                break;
+        }
+        PrintResult(m, num[k], finishTime - startTime);
+        free(m);
+    }
+}
+int main() {
+    Header(1);
+    Execution(1);
+    Header(2);
+    Execution(2);
+    Header(3);
+    Execution(3);
+    return 0;
+}
