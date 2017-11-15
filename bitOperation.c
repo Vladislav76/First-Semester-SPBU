@@ -40,7 +40,7 @@ int logicalShift(int x, int n) {
     return x;
 }
 int addOK(int x, int y) {
-    int sign = ((x | y) >> 31) & 1;
+    int sign = ((x | y) >> 24) & 128;
     int mask = ~(255 << 24);
     int s = ((x & mask) + (y & mask)) >> 24;
     int x1 = (x >> 24) & 255;
@@ -63,6 +63,5 @@ int isPower2(int x) {
     return !!x & !((x >> 31) & 1) & !(x & y + y) ;
 }
 int main() {
-   
     return 0;
 }
