@@ -40,15 +40,10 @@ int logicalShift(int x, int n) {
     return x;
 }
 int addOK(int x, int y) {
-    int sign = ((x | y) >> 24) & 128;
-    int mask = ~(255 << 24);
-    int s = ((x & mask) + (y & mask)) >> 24;
-    int x1 = (x >> 24) & 255;
-    int y1 = (y >> 24) & 255;
-    s = (s + x1 + y1);
-    int sign2 = s & 128;
-    s = s >> 8;
-    return !(s || (sign2 ^ sign));
+    int signSum = (x + y) >> 31;
+    int signX = x >> 31;
+    int signY = y >> 31;
+    return !(~(signX ^ signY) & (signX ^ signSum));
 }
 int bang(int x) {
     int i = (x >> 31 | (~x + 1) >> 31) & 1;
@@ -59,9 +54,10 @@ int conditional(int x, int y, int z) {
     return y & mask | z & ~mask;
 }
 int isPower2(int x) {
-    int y = ~x + 1;
+    int y = ~x + 1;ss
     return !!x & !((x >> 31) & 1) & !(x & y + y) ;
 }
 int main() {
+    printf("%d\n", addOK(2147483647, 2147483647));
     return 0;
 }
