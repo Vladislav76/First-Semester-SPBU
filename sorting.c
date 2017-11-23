@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #define MAX_VALUE 32768
-#define COUNTING 1
-#define QUICK 2 
-#define BUBBLE 3
 typedef void (*funcptr) (int*, int);
 void CountingSorting(int *m, int size) {
     int *TempArray = calloc(MAX_VALUE, sizeof(int));
