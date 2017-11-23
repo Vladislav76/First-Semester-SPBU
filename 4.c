@@ -1,14 +1,11 @@
 #include <stdio.h>
 int CountingDifference(int n) {
-	int Res = 0;
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= n; j++) {
-			if (i != j) {
-				Res += i * j;
-			}
-		}
+	int res = 0;
+	int sum = (1 + n) * n / 2;
+	for(int i = 1; i <= n; i++) {
+		res += i * (sum - i);
 	}
-	return Res;
+	return res;
 }
 int main(void) {
 	int n = 100;
