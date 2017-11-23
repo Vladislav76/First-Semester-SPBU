@@ -7,9 +7,13 @@ void InputStr(FILE *f, char **m, int *n) {
 	int i = 0;
 	while (!feof(f)) {
 		m[i] = (char*) calloc(MAX_LEN, sizeof(char));
-		if (fgets(m[i], MAX_LEN, f) != NULL) {
+		if (m[i] == NULL) {
+			printf("Ошибка. Не удалось выделить память.\n");
+			exit(1);
 		}
-		i++;
+		if (fgets(m[i], MAX_LEN, f) != NULL) {
+			i++;
+		}
 	}
 	*n = i;
 }
@@ -28,18 +32,28 @@ void SeekStr(char **m, int n) {
 		}
 	}
 }
+void Clearing(char **m, int n) {
+	for (int i = 0; i < n; i++) {
+		free(m[i]);
+	}
+}
 int main(void) {
 	FILE *fptr;
 	char name[] = "input.txt";
 	if ((fptr = fopen(name, "r")) != NULL) {
 		int n = 0;
-		char** m = calloc(MAX_SIZE, sizeof(char**));
+		char** m = (char**) calloc(MAX_SIZE, sizeof(char*));
+		if (m == NULL) {
+			printf("Ошибка. Не удалось выделить память.\n");
+			exit(1);
+		}
 		InputStr(fptr, m, &n);
 		SeekStr(m, n);
+		Clearing(m, n);
+		fclose(fptr);
 	}
 	else {
 		printf("Не удалось открыть файл!\n");
 	}
-	fclose(fptr);
 	return 0;
 }
