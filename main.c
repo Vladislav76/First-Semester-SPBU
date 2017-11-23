@@ -91,6 +91,14 @@ void AnalyzeKeys(int *key) {
                 Clearing(&list);
             }
             break;
+        case EXIT:
+            if (&list != NULL) {
+                Clearing(&list);
+            }
+            exit(0);
+        default:
+            printf("Error! Please, enter correct number of command.\n");
+            break;
     }
 }
 void Execute() {
@@ -98,9 +106,6 @@ void Execute() {
     while (1) {
         Interface();
         AnalyzeKeys(&key);
-        if (key == EXIT) {
-            break;
-        }
     }
 }
 int main() {

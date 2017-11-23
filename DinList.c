@@ -3,6 +3,10 @@
 #include "DinList.h"
 struct Node* CreateNode(int value) {
     struct Node *newNode = calloc(1, sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Error! Couldn't allocate memory.\n");
+        exit(1);
+    }
     newNode -> value = value;
     return newNode;
 }
