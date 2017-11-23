@@ -36,6 +36,7 @@ void Clearing(char **m, int n) {
 	for (int i = 0; i < n; i++) {
 		free(m[i]);
 	}
+	free(m);
 }
 int main(void) {
 	FILE *fptr;
