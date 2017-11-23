@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <math.h>
-
+#include <float.h>
+#define N_METHODS 3
+#define MAX_LEN 256
 void fn1(float, int*, int*, int*); 
 void fn2(float, int*, int*, int*); 
 void fn3(float, int*, int*, int*);
-
 struct qq {
-	char s[200];
+	char s[MAX_LEN];
 	void (*fptr)(float, int*, int*, int*);
 };
-struct qq m[3] = {{"Union с int и битовые операции", &fn1}, 
+struct qq m[N_METHODS] = {{"Union с int и битовые операции", &fn1}, 
 {"Union со структурой с bit fields", &fn2}, 
 {"Взятие адреса и разыменование указателя, приведенного к другому типу и битовые операции", &fn3}};
-
 void fn1(float a,  int* sign, int* mant, int* exp) {
 	union {
 		float x;
@@ -46,7 +46,7 @@ void fn3(float a, int* sign, int* mant, int* exp) {
 	*mant = *inptr & ~(511 << 23);
 }
 void print_methods(struct qq m[]) {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < N_METHODS; i++) {
 		printf("%d) %s\n", i + 1, m[i].s);
 	}
 }
@@ -66,19 +66,29 @@ void print_float(int sign, int mant, int exp) {
 }
 int main(void) {
  	float a, b;
-	int num, sign, mant, exp;
+	int num = 0, sign, mant, exp;
+	float maxFloat = 3.402823466E+38;
+	float minFloat = 1.175494351E-38;
 	print_methods(m);
-	printf("Enter number of method (1 or 2 or 3): \n");
-	scanf("%d", &num);
+	while (num < 1 || num > N_METHODS) {
+		printf("Enter number of method (1 or 2 or 3): \n");
+		scanf("%d", &num);
+	}
 	printf("Enter two float-numbers:\n");
 	scanf("%f%f", &a, &b);
+	int sizeFloat = sizeof(float);
+	while (a > maxFloat || b > maxFloat || a < minFloat || b < minFloat) {
+		printf("Enter two float-numbers again:\n");
+		scanf("%f%f", &a, &b);
+	}
+	printf("%f %f\n", a, b);
 	m[num - 1].fptr(a / b, &sign, &mant, &exp);
 	if (b == 0) {
 		if (a > 0) {
 			printf("+Inf\n");
 		} 
 		else if (a < 0) {
-				printf("-Inf\n");
+			printf("-Inf\n");
 		}
 		else {
 			printf("Nan\n");
