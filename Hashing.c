@@ -2,14 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Hashing.h"
-int* CreateHashTable (int size) {
-    int* h = (int*) calloc(size, sizeof(int*));
+struct element ** CreateHashTable (int size) {
+    struct element * h = (struct element *) calloc(size, sizeof(struct element *));
     return h;
 }
-void Clearing (int* hashTable, int size) {
+void Clearing (struct element ** hashTable, int size) {
     for (int i = 0; i < size; i++) {
-        free(hashTable[i]);
+        struct element *current = hashTable[i];
+        struct element *temp;
+        while (current) {
+            temp = current->next;
+            free(current);
+            current = temp;
+        }
+       // free(hashTable[i]);
     }
+    free(hashTable);
 }
 int HashFunction (char* key, int size) {
     unsigned int simpleValue = 7121;
@@ -36,7 +44,7 @@ struct element* NewElement(char* key, int value) {
     elem -> next = NULL;
     return elem;
 }
-void InsertElement (int* hashTable, int size, char* key, int value) {
+void InsertElement (struct element ** hashTable, int size, char* key, int value) {
     int hash = HashFunction(key, size);
     struct element* current = hashTable[hash];
     if (current) {
@@ -54,7 +62,7 @@ void InsertElement (int* hashTable, int size, char* key, int value) {
         hashTable[hash] = NewElement(key, value);
     }
 }
-void IterateFunction(int* hashTable, int size, funcPtr f) {
+void IterateFunction(struct element ** hashTable, int size, funcPtr f) {
     struct element* current;
     for(int i = 0; i < size; i++) {
         current = hashTable[i];

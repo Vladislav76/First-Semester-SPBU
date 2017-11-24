@@ -10,6 +10,8 @@ struct Statistics {
     int diffWords;
     int maxLength;
     int minLength;
+    char* mostPopularWord;
+    int numMostPopularWord;
     int numChains;
     int maxChain;
     int middleLenChain;
@@ -37,7 +39,13 @@ void SeekLongestWord(char* key, int value) {
         state.minWord = key;
     }
 }
-void CountingNumOfChains(int* hashTable, int size) {
+void SeekMostPopularWord(char *key, int value) {
+    if (value > state.numMostPopularWord) {
+        state.numMostPopularWord = value;
+        state.mostPopularWord = key;
+    }
+}
+void CountingNumOfChains(struct element ** hashTable, int size) {
     struct element* current;
     for(int i = 0; i < size; i++) {
         if (hashTable[i]) {
@@ -45,7 +53,7 @@ void CountingNumOfChains(int* hashTable, int size) {
         }
     }
 }
-void CountingMaxChain(int* hashTable, int size) {
+void CountingMaxChain(struct element ** hashTable, int size) {
     struct element* current;
     for(int i = 0; i < size; i++) {
         current = hashTable[i];
@@ -81,6 +89,8 @@ void AnalyzeOfStatistics(int* hashTable, int size) {
     IterateFunction(hashTable, size, func);
     func = &SeekLongestWord;
     IterateFunction(hashTable, size, func);
+    func = &SeekMostPopularWord;
+    IterateFunction(hashTable, size, func);
     func = &PrintElement;
     IterateFunction(hashTable, size, func);
     CountingNumOfChains(hashTable, size);
@@ -93,6 +103,8 @@ void AnalyzeOfStatistics(int* hashTable, int size) {
     printf("Number of chains: %d\n", state.numChains);
     printf("Max length of chain: %d\n", state.maxChain);
     printf("Middle length of chain: %d\n", state.middleLenChain);
+    printf("Most popular word: %s\n", state.mostPopularWord);
+    printf("Was used: %d\n", state.numMostPopularWord);
     printf("Longest word: %s\n", state.maxWord);
     printf("Shortest word: %s\n", state.minWord);
     printf("Time of working: %lf\n", state.times);
@@ -101,7 +113,7 @@ void Execute(FILE* input, int sizeTable) {
     double startTime = (double) clock();
     string = (char*) calloc(1000000, sizeof(char));
     int size = sizeTable;
-    int* hashTable = CreateHashTable(size);
+    struct element ** hashTable = CreateHashTable(size);
     char bufer[MAX_LEN];
     char word[MAX_LEN_WORD];
     while (!feof(input)) {
@@ -128,13 +140,14 @@ void Execute(FILE* input, int sizeTable) {
     state.times = (finishTime - startTime) / CLOCKS_PER_SEC;
     AnalyzeOfStatistics(hashTable, size);
     //PrintTable(hashTable, size, output);
+    free(string);
     Clearing(hashTable, size);
 }
 int main() {
     FILE* input;
-    char name[] = "Hobbit.txt";
+    char name[] = "War and Peace.txt";
     if ((input = fopen(name, "r")) != NULL) {
-        Execute(input, 100000);
+        Execute(input, 100000000);
         fclose(input);
     }
     else {

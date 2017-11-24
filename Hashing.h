@@ -8,10 +8,10 @@ struct element {
     int num;
     struct element* next;
 };
-int* CreateHashTable (int);
-void Clearing (int*, int);
+struct element ** CreateHashTable (int);
+void Clearing (struct element **, int);
 int HashFunction (char*, int);
 struct element* NewElement(char*, int);
-void InsertElement(int*, int, char*, int);
-void IterateFunction(int*, int, funcPtr);
+void InsertElement(struct element **, int, char*, int);
+void IterateFunction(struct element **, int, funcPtr);
 #endif
