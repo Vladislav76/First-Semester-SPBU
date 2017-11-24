@@ -51,7 +51,7 @@ void print_methods(struct qq m[]) {
 	}
 }
 void print_float(int sign, int mant, int exp) {
-	sign = 1 + sign * (-2);
+	/*sign = 1 + sign * (-2);
 	int step = exp - 127;
 	float f = 1 + (float) mant / pow(2, 23);
 	float offs = 2;
@@ -61,27 +61,29 @@ void print_float(int sign, int mant, int exp) {
 	}
 	for (int i = 0; i < step; i++) {
 		f = f * offs;
+	}*/
+	if (sign < 0) {
+		printf("(%d) * ", sign);
 	}
-    printf("Result: %f\n", f);
+	printf("1.%d * ", mant);
+    printf("2^(%d)\n", exp - 127);
 }
 int main(void) {
  	float a, b;
 	int num = 0, sign, mant, exp;
-	float maxFloat = 3.402823466E+38;
-	float minFloat = 1.175494351E-38;
+	float maxFloat = 3.4E+38;
+	float minFloat = 3.4E-38;
 	print_methods(m);
 	while (num < 1 || num > N_METHODS) {
 		printf("Enter number of method (1 or 2 or 3): \n");
 		scanf("%d", &num);
-	}
+	};
 	printf("Enter two float-numbers:\n");
 	scanf("%f%f", &a, &b);
-	int sizeFloat = sizeof(float);
-	while (a > maxFloat || b > maxFloat || a < minFloat || b < minFloat) {
+	/*while () {
 		printf("Enter two float-numbers again:\n");
 		scanf("%f%f", &a, &b);
-	}
-	printf("%f %f\n", a, b);
+	}*/
 	m[num - 1].fptr(a / b, &sign, &mant, &exp);
 	if (b == 0) {
 		if (a > 0) {
