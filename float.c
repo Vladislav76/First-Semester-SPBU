@@ -11,8 +11,8 @@ struct qq {
 	void (*fptr)(float, int*, int*, int*);
 };
 struct qq m[N_METHODS] = {{"Union с int и битовые операции", &fn1}, 
-{"Union со структурой с bit fields", &fn2}, 
-{"Взятие адреса и разыменование указателя, приведенного к другому типу и битовые операции", &fn3}};
+	{"Union со структурой с bit fields", &fn2}, 
+	{"Взятие адреса и разыменование указателя, приведенного к другому типу и битовые операции", &fn3}};
 void fn1(float a,  int* sign, int* mant, int* exp) {
 	union {
 		float x;
@@ -55,7 +55,7 @@ void print_float(int sign, int mant, int exp) {
 		printf("(-1) * ");
 	}
 	printf("1.%d * ", mant);
-        printf("2^(%d)\n", exp - 127);
+	printf("2^(%d)\n", exp - 127);
 }
 int main(void) {
  	float a, b;
