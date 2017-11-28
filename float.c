@@ -51,19 +51,8 @@ void print_methods(struct qq m[]) {
 	}
 }
 void print_float(int sign, int mant, int exp) {
-	/*sign = 1 + sign * (-2);
-	int step = exp - 127;
-	float f = 1 + (float) mant / pow(2, 23);
-	float offs = 2;
-	if (step < 0) {
-		step = step * (-1);
-		offs = 0.5;
-	}
-	for (int i = 0; i < step; i++) {
-		f = f * offs;
-	}*/
-	if (sign < 0) {
-		printf("(%d) * ", sign);
+	if (sign == 1) {
+		printf("(-1) * ");
 	}
 	printf("1.%d * ", mant);
     printf("2^(%d)\n", exp - 127);
@@ -80,10 +69,6 @@ int main(void) {
 	};
 	printf("Enter two float-numbers:\n");
 	scanf("%f%f", &a, &b);
-	/*while () {
-		printf("Enter two float-numbers again:\n");
-		scanf("%f%f", &a, &b);
-	}*/
 	m[num - 1].fptr(a / b, &sign, &mant, &exp);
 	if (b == 0) {
 		if (a > 0) {
