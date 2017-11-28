@@ -55,7 +55,7 @@ void print_float(int sign, int mant, int exp) {
 		printf("(-1) * ");
 	}
 	printf("1.%d * ", mant);
-    printf("2^(%d)\n", exp - 127);
+        printf("2^(%d)\n", exp - 127);
 }
 int main(void) {
  	float a, b;
