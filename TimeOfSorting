@@ -1,0 +1,36 @@
+<html>
+<head>
+    <style type="text/css">
+        h1 {
+            font-size: 130%;
+            font-family: Verdana, Arial;
+            color: #332295;
+        }
+        table {
+            font-size: 150%;
+            font-family: Arial;
+        }
+    </style>
+    <title>Время сортировки последовательности чисел различными способами</title>
+</head>
+<body>
+    <table background="http://nabludatel.net/wp-content/uploads/2015/12/snegopad1.jpg" align="center" border="2">
+        <caption><h1>Таблица времени сортировки чисел</h1></caption>
+        <tr align="center">
+            <th><h1>Количество чисел</h1></th>
+            <th><h1>Сортировка подсчётом</h1></th>
+            <th><h1>Сортировка "пузырьком"</h1></th>
+            <th><h1>Быстрая сортировка (Хоара)</h1></th>
+        </tr>
+        <tr align="center"><td>5</td><td>0.000281s</td><td>0.000002s</td><td>0.000002s</td></tr>
+        <tr align="center"><td>10</td><td>0.000260s</td><td>0.000003s</td><td>0.000004s</td></tr>
+        <tr align="center"><td>100</td><td>0.000317s</td><td>0.000077s</td><td>0.000014s</td></tr>
+        <tr align="center"><td>1k</td><td>0.000326s</td><td>0.007630s</td><td>0.000164s</td></tr>
+        <tr align="center"><td>10k</td><td>0.000570s</td><td>0.766571s</td><td>0.001948s</td></tr>
+        <tr align="center"><td>100k</td><td>0.002812s</td><td>76.464329s</td><td>0.023293s</td></tr>
+        <tr align="center"><td>1M</td><td>0.025193s</td><td>n/a</td><td>0.258222s</td></tr>
+        <tr align="center"><td>10M</td><td>0.217937s</td><td>n/a</td><td>2.910826s</td></tr>
+        <tr align="center"><td>100M</td><td>2.179523s</td><td>n/a</td><td>32.459293s</td></tr>
+    </table>
+</body>
+</html>
