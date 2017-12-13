@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
-#define N_METHODS 3
 #define MAX_LEN 256
 void fn1(float, int*, int*, int*); 
 void fn2(float, int*, int*, int*); 
@@ -10,9 +9,10 @@ struct qq {
 	char s[MAX_LEN];
 	void (*fptr)(float, int*, int*, int*);
 };
-struct qq m[N_METHODS] = {{"Union с int и битовые операции", &fn1}, 
+struct qq m[] = {{"Union с int и битовые операции", &fn1}, 
 	{"Union со структурой с bit fields", &fn2}, 
 	{"Взятие адреса и разыменование указателя, приведенного к другому типу и битовые операции", &fn3}};
+int countMethods = sizeof(m) / sizeof(struct qq);
 void fn1(float a,  int* sign, int* mant, int* exp) {
 	union {
 		float x;
@@ -46,7 +46,7 @@ void fn3(float a, int* sign, int* mant, int* exp) {
 	*mant = *inptr & ~(511 << 23);
 }
 void print_methods(struct qq m[]) {
-	for (int i = 0; i < N_METHODS; i++) {
+	for (int i = 0; i < countMethods; i++) {
 		printf("%d) %s\n", i + 1, m[i].s);
 	}
 }
@@ -63,7 +63,7 @@ int main(void) {
 	float maxFloat = 3.4E+38;
 	float minFloat = 3.4E-38;
 	print_methods(m);
-	while (num < 1 || num > N_METHODS) {
+	while (num < 1 || num > countMethods) {
 		printf("Enter number of method (1 or 2 or 3): \n");
 		scanf("%d", &num);
 	};
