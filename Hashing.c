@@ -3,7 +3,11 @@
 #include <string.h>
 #include "Hashing.h"
 struct element ** CreateHashTable (int size) {
-    struct element * h = (struct element *) calloc(size, sizeof(struct element *));
+    struct element ** h = (struct element **) calloc(size, sizeof(struct element *));
+    if (h == NULL) {
+        printf("Error. Couldn't allocate memory!\n");
+        exit(1);
+    }
     return h;
 }
 void Clearing (struct element ** hashTable, int size) {
@@ -15,7 +19,6 @@ void Clearing (struct element ** hashTable, int size) {
             free(current);
             current = temp;
         }
-       // free(hashTable[i]);
     }
     free(hashTable);
 }
@@ -32,6 +35,10 @@ int HashFunction (char* key, int size) {
 }
 struct element* NewElement(char* key, int value) {
     struct element* elem = (struct element*) malloc(sizeof(struct element));
+    if (elem == NULL) {
+        printf("Error. Couldn't allocate memory!\n");
+        exit(1);
+    }
     elem -> key = &(string[length]);
     int i = 0;
     while (key[i] != '\0') {

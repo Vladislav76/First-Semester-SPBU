@@ -80,19 +80,14 @@ void CountingMaxChain(struct element ** hashTable, int size) {
         }
     }
 }*/
-void AnalyzeOfStatistics(int* hashTable, int size) {
+void AnalyzeOfStatistics(struct element ** hashTable, int size) {
     state.maxWord = NULL;
     state.minLength = 999;
-    funcPtr func = &CountingSum;
-    IterateFunction(hashTable, size, func);
-    func = &CountingDiff;
-    IterateFunction(hashTable, size, func);
-    func = &SeekLongestWord;
-    IterateFunction(hashTable, size, func);
-    func = &SeekMostPopularWord;
-    IterateFunction(hashTable, size, func);
-    func = &PrintElement;
-    IterateFunction(hashTable, size, func);
+    IterateFunction(hashTable, size, &CountingSum);
+    IterateFunction(hashTable, size, &CountingDiff);
+    IterateFunction(hashTable, size, &SeekLongestWord);
+    IterateFunction(hashTable, size, &SeekMostPopularWord);
+    IterateFunction(hashTable, size, &PrintElement);
     CountingNumOfChains(hashTable, size);
     CountingMaxChain(hashTable, size);
     state.middleLenChain = state.diffWords / state.numChains;
@@ -112,6 +107,10 @@ void AnalyzeOfStatistics(int* hashTable, int size) {
 void Execute(FILE* input, int sizeTable) {
     double startTime = (double) clock();
     string = (char*) calloc(1000000, sizeof(char));
+    if (string == NULL) {
+        printf("Error. Couldn't allocate memory!\n");
+        exit(1);
+    }
     int size = sizeTable;
     struct element ** hashTable = CreateHashTable(size);
     char bufer[MAX_LEN];
