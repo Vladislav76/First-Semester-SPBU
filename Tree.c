@@ -108,7 +108,12 @@ void PrintMatrix(int** matr, int size, char str[]) {
 int Min(int i, int j, int** r, int** c) {
 	int sum = -1;
 	int k;
-	for(int l = r[i][j - 1]; l <= r[i + 1][j]; l++) {
+	int left = r[i][j - 1];
+	int right = r[i + 1][j];
+	if (left <= i) {
+		left = i + 1;
+	}
+	for(int l = left; l <= right; l++) {
 		int currentSum = c[i][l - 1] + c[l][j];
 		if (sum == -1 || currentSum < sum) {
 			sum = currentSum;
@@ -119,18 +124,15 @@ int Min(int i, int j, int** r, int** c) {
 	return sum;
 }
 void SeekOptimalBinTree(int** c, int** w, int** r, int* p, int n) {
-	for(int i = 0; i <= n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			w[i][j] = w[i][j - 1] + p[j - 1];
-		}
-	}
-	for(int j = 1; j <= n; j++) {
-		c[j - 1][j] = w[j - 1][j];
-		r[j - 1][j] = j;
+	for(int i = 0; i < n; i++) {
+		w[i][i + 1] = p[i];
+		c[i][i + 1] = p[i];
+		r[i][i + 1] = i + 1;
 	}
 	for(int d = 2; d <= n; d++) {
 		for(int j = d; j <= n; j++) {
 			int i = j - d;
+			w[i][j] = w[i][j - 1] + p[j - 1];
 			c[i][j] = w[i][j] + Min(i, j, r, c);
 		}
 	}	
