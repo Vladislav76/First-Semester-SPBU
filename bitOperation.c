@@ -54,10 +54,10 @@ int conditional(int x, int y, int z) {
     return y & mask | z & ~mask;
 }
 int isPower2(int x) {
-    int y = ~x + 1;ss
+    int y = ~x + 1;
     return !!x & !((x >> 31) & 1) & !(x & y + y) ;
 }
 int main() {
-    printf("%d\n", addOK(2147483647, 2147483647));
+    printf("%d\n", thirdBits());
     return 0;
 }
